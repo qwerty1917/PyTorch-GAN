@@ -31,6 +31,8 @@ parser.add_argument("--channels", type=int, default=1, help="number of image cha
 parser.add_argument("--n_critic", type=int, default=5, help="number of training steps for discriminator per iter")
 parser.add_argument("--clip_value", type=float, default=0.01, help="lower and upper clip value for disc. weights")
 parser.add_argument("--sample_interval", type=int, default=400, help="interval betwen image samples")
+
+parser.add_argument("--save_folder", type=str, default="images", help="generated sample folder")
 opt = parser.parse_args()
 print(opt)
 
@@ -200,6 +202,6 @@ for epoch in range(opt.n_epochs):
             )
 
             if batches_done % opt.sample_interval == 0:
-                save_image(fake_imgs.data[:25], "images/%d.png" % batches_done, nrow=5, normalize=True)
+                save_image(fake_imgs.data[:25], "{}/{}.png".format(opt.save_folder, batches_done), nrow=5, normalize=True)
 
             batches_done += opt.n_critic
