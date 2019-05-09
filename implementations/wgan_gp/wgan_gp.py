@@ -38,9 +38,6 @@ img_shape = (opt.channels, opt.img_size, opt.img_size)
 
 cuda = True if torch.cuda.is_available() else False
 
-print("Cuda: {}".format(cuda))
-raise()
-
 class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
@@ -95,6 +92,9 @@ discriminator = Discriminator()
 if cuda:
     generator.cuda()
     discriminator.cuda()
+    generator = nn.DataParallel(generator)
+    discriminator = nn.DataParallel(discriminator)
+
 
 # Configure data loader
 os.makedirs("../../data/mnist", exist_ok=True)
